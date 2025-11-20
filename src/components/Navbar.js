@@ -8,6 +8,12 @@ export default function Navbar() {
   const [showSignup, setShowSignup] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
 
+  React.useEffect(() => {
+    const handler = () => setShowSearch(false);
+    window.addEventListener('closeSearch', handler);
+    return () => window.removeEventListener('closeSearch', handler);
+  }, []);
+
   return (
     <header className="navbar">
       <div className="nav-left">

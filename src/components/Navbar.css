@@ -55,22 +55,24 @@
 .search-window {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: 1000000;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(4px);
+  z-index: 1000001;
   display:flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 1.5rem;
 }
 
 .search-window-inner {
-  width: 95%;
-  max-width: 1100px;
-  height: 90%;
+  width: 100%;
+  max-width: 1200px;
+  height: 92%;
   background: white;
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: auto;
   position: relative;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
 }
 
 .search-close {
