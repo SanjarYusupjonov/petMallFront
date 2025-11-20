@@ -11,7 +11,7 @@
 .nav-left .brand {
   font-weight: 700;
   font-size: 1.1rem;
-  color: #333;
+  color: var(--accent-pink);
 }
 
 .nav-right {
@@ -29,14 +29,15 @@
 }
 
 .btn.primary {
-  background: #1976d2;
+  background: var(--accent-pink);
   color: white;
+  border-color: var(--accent-pink);
 }
 
 .btn.ghost {
   background: transparent;
-  color: #1976d2;
-  border-color: #1976d233;
+  color: var(--accent-pink);
+  border-color: rgba(0,0,0,0.04);
 }
 
 .modal-overlay {
@@ -49,6 +50,37 @@
   padding-top: 4rem;
   background: rgba(0, 0, 0, 0.4);
   z-index: 999999;
+}
+
+.search-window {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 1000000;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.search-window-inner {
+  width: 95%;
+  max-width: 1100px;
+  height: 90%;
+  background: white;
+  border-radius: 8px;
+  overflow: auto;
+  position: relative;
+}
+
+.search-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
 }
 
 .modal {

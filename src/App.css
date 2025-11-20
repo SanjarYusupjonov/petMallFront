@@ -17,6 +17,19 @@ main {
   flex: 1 0 auto; /* allow main content to grow and push footer to bottom */
 }
 
+:root{
+  --accent-pink: #ff5a8f;
+  --accent-pink-dark: #e0487a;
+  --bg-beige: #fbf7f5;
+  --muted: #6b6b6b;
+}
+
+body {
+  background: var(--bg-beige);
+  color: #222;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

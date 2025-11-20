@@ -1,0 +1,49 @@
+.pet-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000000;
+  padding: 2rem;
+}
+
+.pet-modal {
+  display: flex;
+  gap: 1rem;
+  max-width: 1100px;
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.pet-modal-left {
+  flex: 1 1 65%;
+  padding: 1rem 1.4rem;
+}
+
+.map-placeholder {
+  height: 220px;
+  background: linear-gradient(90deg,#eee,#ddd);
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  display:flex;align-items:center;justify-content:center;color:#666
+}
+
+.pet-modal-right {
+  flex: 0 0 320px;
+  padding: 1rem;
+  border-left: 1px solid #f0f0f0;
+  background: #fff7f9;
+}
+
+.bio-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 6px; }
+.bio-card { background: white; border-radius:6px; padding:0.6rem }
+.bio-list { margin-top: 0.6rem; display:flex;flex-direction:column; gap:0.5rem }
+.bio-list div { display:flex; justify-content:space-between; }
+
+.modal-actions { margin-top: 0.9rem; display:flex; gap:0.5rem; justify-content:space-between }
+.modal-actions .btn.primary { background: var(--accent-pink); border-color: var(--accent-pink); }
+.modal-actions .btn.ghost { color: var(--accent-pink); }

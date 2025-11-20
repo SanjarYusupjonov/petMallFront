@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import '../App.css';
 import './Navbar.css';
+import PetList from '../pages/PetList';
 
 export default function Navbar() {
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
 
   return (
     <header className="navbar">
@@ -13,6 +15,9 @@ export default function Navbar() {
       </div>
 
       <div className="nav-right">
+        <button className="btn ghost" title="Search" onClick={() => setShowSearch(true)}>
+          🔍
+        </button>
         <button className="btn ghost" onClick={() => setShowLogin(true)}>
           Login
         </button>
@@ -20,6 +25,15 @@ export default function Navbar() {
           Sign Up
         </button>
       </div>
+
+      {showSearch && (
+        <div className="search-window" onClick={() => setShowSearch(false)}>
+          <div className="search-window-inner" onClick={(e) => e.stopPropagation()}>
+            <button className="search-close" onClick={() => setShowSearch(false)}>✕</button>
+            <PetList />
+          </div>
+        </div>
+      )}
 
       {showLogin && (
         <div className="modal-overlay" onClick={() => setShowLogin(false)}>

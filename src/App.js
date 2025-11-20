@@ -3,6 +3,7 @@ import { rainbowCursor } from './cursor'; // Import your cursor function
 import Navbar from './components/Navbar';
 import './App.css';
 import Footer from './components/Footer';
+import Home from './pages/Home';
 
 function App() {
   useEffect(() => {
@@ -18,9 +19,8 @@ function App() {
     <div className="App">
       <Navbar />
 
-      <main style={{ padding: '2rem' }}>
-        <h1>Welcome to Pet Adoption</h1>
-        <p>Move your mouse around to see the rainbow cursor effect!</p>
+      <main>
+        <Home />
       </main>
       <Footer />
     </div>
