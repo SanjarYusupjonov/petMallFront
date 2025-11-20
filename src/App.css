@@ -2,6 +2,21 @@
   text-align: center;
 }
 
+/* Layout: make App a column flex container so the footer can stick to page bottom */
+html, body, #root {
+  height: 100%;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1 0 auto; /* allow main content to grow and push footer to bottom */
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

@@ -1,0 +1,89 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: #ffffffcc;
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid #eee;
+}
+
+.nav-left .brand {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.nav-right {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.btn {
+  padding: 0.5rem 0.9rem;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn.primary {
+  background: #1976d2;
+  color: white;
+}
+
+.btn.ghost {
+  background: transparent;
+  color: #1976d2;
+  border-color: #1976d233;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  /* place modal a bit above center */
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 4rem;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 999999;
+}
+
+.modal {
+  width: 320px;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+.modal h3 {
+  margin-top: 0;
+}
+
+.modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.modal label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+}
+
+.modal input {
+  padding: 0.45rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}

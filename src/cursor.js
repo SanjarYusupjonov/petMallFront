@@ -6,8 +6,9 @@ export function rainbowCursor(options) {
 
   let width = window.innerWidth;
   let height = window.innerHeight;
-  const cursor = { x: width / 2, y: width / 2 };
-  const lastPos = { x: width / 2, y: width / 2 };
+  // Use width/2 and height/2 for sensible initial cursor position
+  const cursor = { x: width / 2, y: height / 2 };
+  const lastPos = { x: width / 2, y: height / 2 };
   let lastTimestamp = 0;
   const particles = [];
   const canvImages = [];
@@ -41,7 +42,8 @@ export function rainbowCursor(options) {
     canvas.style.top = "0px";
     canvas.style.left = "0px";
     canvas.style.pointerEvents = "none";
-    canvas.style.zIndex = options.zIndex || "9999999999";
+  // Keep canvas z-index reasonably low so overlays/modals can appear above it
+  canvas.style.zIndex = options.zIndex || "999";
 
     if (hasWrapperEl) {
       canvas.style.position = "absolute";
@@ -49,10 +51,11 @@ export function rainbowCursor(options) {
       canvas.width = element.clientWidth;
       canvas.height = element.clientHeight;
     } else {
+      // Use fixed canvas that matches the viewport size
       canvas.style.position = "fixed";
       document.body.appendChild(canvas);
-      canvas.width = width;
-      canvas.height = height;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
 
     context.font = "21px serif";
@@ -89,6 +92,8 @@ export function rainbowCursor(options) {
     element.addEventListener("touchmove", onTouchMove, { passive: true });
     element.addEventListener("touchstart", onTouchMove, { passive: true });
     window.addEventListener("resize", onWindowResize);
+    // Also adjust canvas if the page layout changes (optional)
+    window.addEventListener("scroll", onWindowResize, { passive: true });
   }
 
   function onWindowResize(e) {
@@ -141,7 +146,7 @@ export function rainbowCursor(options) {
         addParticle(
           cursor.x,
           cursor.y,
-          canvImages[Math.floor(Math.random() * possibleEmoji.length)]
+          canvImages[Math.floor(Math.random() * canvImages.length)]
         );
 
         lastPos.x = cursor.x;
@@ -190,7 +195,8 @@ export function rainbowCursor(options) {
     element.removeEventListener("mousemove", onMouseMove);
     element.removeEventListener("touchmove", onTouchMove);
     element.removeEventListener("touchstart", onTouchMove);
-    window.addEventListener("resize", onWindowResize);
+    window.removeEventListener("resize", onWindowResize);
+    window.removeEventListener("scroll", onWindowResize);
   }
 
   /**
