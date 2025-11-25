@@ -1,18 +1,21 @@
 export function rainbowCursor(options) {
-  const possibleEmoji = (options && options.emoji) || ["🐶", "🐱", "🐴", "😊"];
-  const delay = (options && options.delay) || 16;
+  let possibleColors = (options && options.colors) || [
+    "#D61C59",
+    "#E7D84B",
+    "#1B8798",
+  ];
   let hasWrapperEl = options && options.element;
   let element = hasWrapperEl || document.body;
 
   let width = window.innerWidth;
   let height = window.innerHeight;
-  // Use width/2 and height/2 for sensible initial cursor position
-  const cursor = { x: width / 2, y: height / 2 };
-  const lastPos = { x: width / 2, y: height / 2 };
-  let lastTimestamp = 0;
+  const cursor = { x: width / 2, y: width / 2 };
+  const lastPos = { x: width / 2, y: width / 2 };
   const particles = [];
   const canvImages = [];
   let canvas, context, animationFrame;
+
+  const char = options.fairySymbol || "*";
 
   const prefersReducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
@@ -38,12 +41,10 @@ export function rainbowCursor(options) {
 
     canvas = document.createElement("canvas");
     context = canvas.getContext("2d");
-
     canvas.style.top = "0px";
     canvas.style.left = "0px";
     canvas.style.pointerEvents = "none";
-  // Keep canvas z-index reasonably low so overlays/modals can appear above it
-  canvas.style.zIndex = options.zIndex || "999";
+    canvas.style.zIndex = options.zIndex || "9999999999";
 
     if (hasWrapperEl) {
       canvas.style.position = "absolute";
@@ -51,30 +52,32 @@ export function rainbowCursor(options) {
       canvas.width = element.clientWidth;
       canvas.height = element.clientHeight;
     } else {
-      // Use fixed canvas that matches the viewport size
       canvas.style.position = "fixed";
-      document.body.appendChild(canvas);
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      element.appendChild(canvas);
+      canvas.width = width;
+      canvas.height = height;
     }
 
     context.font = "21px serif";
     context.textBaseline = "middle";
     context.textAlign = "center";
 
-    possibleEmoji.forEach((emoji) => {
-      let measurements = context.measureText(emoji);
+    possibleColors.forEach((color) => {
+      let measurements = context.measureText(char);
       let bgCanvas = document.createElement("canvas");
       let bgContext = bgCanvas.getContext("2d");
 
       bgCanvas.width = measurements.width;
-      bgCanvas.height = measurements.actualBoundingBoxAscent * 2;
+      bgCanvas.height =
+        measurements.actualBoundingBoxAscent +
+        measurements.actualBoundingBoxDescent;
 
+      bgContext.fillStyle = color;
       bgContext.textAlign = "center";
       bgContext.font = "21px serif";
       bgContext.textBaseline = "middle";
       bgContext.fillText(
-        emoji,
+        char,
         bgCanvas.width / 2,
         measurements.actualBoundingBoxAscent
       );
@@ -88,12 +91,10 @@ export function rainbowCursor(options) {
 
   // Bind events that are needed
   function bindEvents() {
-    element.addEventListener("mousemove", onMouseMove, { passive: true });
+    element.addEventListener("mousemove", onMouseMove);
     element.addEventListener("touchmove", onTouchMove, { passive: true });
     element.addEventListener("touchstart", onTouchMove, { passive: true });
     window.addEventListener("resize", onWindowResize);
-    // Also adjust canvas if the page layout changes (optional)
-    window.addEventListener("scroll", onWindowResize, { passive: true });
   }
 
   function onWindowResize(e) {
@@ -122,11 +123,6 @@ export function rainbowCursor(options) {
   }
 
   function onMouseMove(e) {
-    // Dont run too fast
-    if (e.timeStamp - lastTimestamp < delay) {
-      return;
-    }
-
     window.requestAnimationFrame(() => {
       if (hasWrapperEl) {
         const boundingRect = element.getBoundingClientRect();
@@ -142,22 +138,21 @@ export function rainbowCursor(options) {
         cursor.y - lastPos.y
       );
 
-      if (distBetweenPoints > 1) {
+      if (distBetweenPoints > 1.5) {
         addParticle(
           cursor.x,
           cursor.y,
-          canvImages[Math.floor(Math.random() * canvImages.length)]
+          canvImages[Math.floor(Math.random() * possibleColors.length)]
         );
 
         lastPos.x = cursor.x;
         lastPos.y = cursor.y;
-        lastTimestamp = e.timeStamp;
       }
     });
   }
 
-  function addParticle(x, y, img) {
-    particles.push(new Particle(x, y, img));
+  function addParticle(x, y, color) {
+    particles.push(new Particle(x, y, color));
   }
 
   function updateParticles() {
@@ -195,21 +190,16 @@ export function rainbowCursor(options) {
     element.removeEventListener("mousemove", onMouseMove);
     element.removeEventListener("touchmove", onTouchMove);
     element.removeEventListener("touchstart", onTouchMove);
-    window.removeEventListener("resize", onWindowResize);
-    window.removeEventListener("scroll", onWindowResize);
-  }
-
-  /**
-   * Particles
-   */
+    window.addEventListener("resize", onWindowResize);
+  };
 
   function Particle(x, y, canvasItem) {
-    const lifeSpan = Math.floor(Math.random() * 60 + 80);
+    const lifeSpan = Math.floor(Math.random() * 30 + 60);
     this.initialLifeSpan = lifeSpan; //
     this.lifeSpan = lifeSpan; //ms
     this.velocity = {
       x: (Math.random() < 0.5 ? -1 : 1) * (Math.random() / 2),
-      y: Math.random() * 0.4 + 0.8,
+      y: Math.random() * 0.7 + 0.9,
     };
     this.position = { x: x, y: y };
     this.canv = canvasItem;
@@ -219,7 +209,7 @@ export function rainbowCursor(options) {
       this.position.y += this.velocity.y;
       this.lifeSpan--;
 
-      this.velocity.y += 0.05;
+      this.velocity.y += 0.02;
 
       const scale = Math.max(this.lifeSpan / this.initialLifeSpan, 0);
 
@@ -236,6 +226,6 @@ export function rainbowCursor(options) {
   init();
 
   return {
-    destroy: destroy,
-  };
+    destroy: destroy
+  }
 }

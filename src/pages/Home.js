@@ -1,13 +1,10 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import PetCard from '../components/Petcards';
 import '../components/Petcards.css';
 import './Home.css';
 
-const RECOMMENDED = [
-  { id: 'r1', name: 'Shay & Luna', type: 'Cat', age: '2 yrs', photoUrl: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=1' },
-  { id: 'r2', name: 'Moose', type: 'Dog', age: '2 yrs', photoUrl: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=1' },
-  { id: 'r3', name: 'Kittens', type: 'Cat', age: '6 mo', photoUrl: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=1' }
-];
+// Removed recommended placeholders per user request — keep array empty so no hero cards render
+const RECOMMENDED = [];
 
 const AVAILABLE = [
   { id: 'a1', name: 'Buddy', type: 'Dog', age: '1 yr', photoUrl: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=1' },
@@ -22,6 +19,30 @@ const AVAILABLE = [
 
 export default function Home() {
   // Static hero — replaced animated SVG with a clear photo of a cute dog.
+
+  const frameVideoRef = useRef(null);
+
+  useEffect(() => {
+    const el = frameVideoRef.current;
+    if (!el) return;
+
+    const onIntersect = (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (!el.getAttribute('data-loaded')) {
+            try { el.src = '/cute.mp4'; el.setAttribute('data-loaded', 'true'); } catch(e) {}
+          }
+          el.play().catch(()=>{});
+        } else {
+          el.pause();
+        }
+      });
+    };
+
+    const obs = new IntersectionObserver(onIntersect, { threshold: 0.45 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   return (
     <>
@@ -43,10 +64,17 @@ export default function Home() {
 
         <div className="hero-right">
           <div className="hero-scene">
-            <img className="hero-image" src="https://images.unsplash.com/photo-1546182990-dffeafbe841d?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=1" alt="Cute dog" />
+            {/* Inline framed video placed inside the right column. Put your file into `public/cute.mp4`. */}
+            <video ref={frameVideoRef} className="frame-video" muted loop playsInline controls poster="/cute-poster.jpg" preload="none">
+              <img src="/cute-poster.jpg" alt="Cute dog" />
+            </video>
           </div>
         </div>
       </div>
+      {/* full-bleed background video replacing the paw pattern */}
+      <video className="home-video" autoPlay muted loop playsInline poster="/hero-poster.jpg">
+        <source src="/hero.mp4" type="video/mp4" />
+      </video>
   </div>
 
   {/* Additional content sections so page is longer and scrollable */}
