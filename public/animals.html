@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Animal Chooser</title>
+  <style>
+    body{font-family:system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial;margin:0;padding:1.2rem;background:#fafafa;color:#222}
+    .container{max-width:980px;margin:0 auto}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+    h1{font-size:1.4rem;margin:0}
+    .controls{display:flex;gap:0.5rem;align-items:center}
+    select, button{padding:0.5rem 0.7rem;border-radius:8px;border:1px solid #ddd}
+    table{width:100%;border-collapse:collapse;margin-top:1rem;background:white;border-radius:8px;overflow:hidden}
+    th,td{padding:0.75rem 0.9rem;border-bottom:1px solid #f0f0f0;text-align:left}
+    thead th{background:#f7f7f7}
+    .empty{padding:3rem;text-align:center;color:#666}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Animal Chooser</h1>
+      <div class="controls">
+        <label>
+          Filter:
+          <select id="filterSelect">
+            <option value="">All</option>
+            <option value="Dog">Dog</option>
+            <option value="Cat">Cat</option>
+            <option value="Horse">Horse</option>
+            <option value="Lion">Lion</option>
+            <option value="Fish">Fish</option>
+          </select>
+        </label>
+        <label>
+          Sort:
+          <select id="sortSelect">
+            <option value="name">Name</option>
+            <option value="age">Age</option>
+          </select>
+        </label>
+        <button id="applyBtn">Apply</button>
+        <button id="closeBtn">Close</button>
+      </div>
+    </header>
+
+    <main>
+      <table id="resultsTable">
+        <thead>
+          <tr><th>Name</th><th>Type</th><th>Age</th></tr>
+        </thead>
+        <tbody id="resultsBody">
+        </tbody>
+      </table>
+
+      <div id="empty" class="empty" style="display:none">No animals to show. You'll connect your database later.</div>
+    </main>
+
+    <p style="margin-top:1rem;color:#666">This page is a simple placeholder for sorting and choosing animals. You can connect your database later — the initial filter is passed via the <code>filter</code> query param.</p>
+  </div>
+
+  <script>
+    // Static sample data — replace with real DB later
+    const SAMPLE = [
+      { name: 'Buddy', type: 'Dog', age: '1 yr' },
+      { name: 'Lola', type: 'Dog', age: '3 yrs' },
+      { name: 'Bella', type: 'Cat', age: '2 yrs' },
+      { name: 'Milo', type: 'Cat', age: '1 yr' },
+      { name: 'Star', type: 'Horse', age: '5 yrs' },
+      { name: 'Simba', type: 'Lion', age: '4 yrs' },
+      { name: 'Goldie', type: 'Fish', age: '6 mo' }
+    ];
+
+    function q(name){
+      const params = new URLSearchParams(location.search);
+      return params.get(name) || '';
+    }
+
+    const filterSelect = document.getElementById('filterSelect');
+    const sortSelect = document.getElementById('sortSelect');
+    const applyBtn = document.getElementById('applyBtn');
+    const closeBtn = document.getElementById('closeBtn');
+    const resultsBody = document.getElementById('resultsBody');
+    const emptyDiv = document.getElementById('empty');
+
+    // Initialize filter from query param
+    const initialFilter = q('filter');
+    if(initialFilter){
+      filterSelect.value = initialFilter;
+    }
+
+    function render() {
+      const filter = filterSelect.value;
+      const sort = sortSelect.value;
+      let list = SAMPLE.slice();
+      if(filter) list = list.filter(i => i.type === filter);
+      if(sort === 'name') list.sort((a,b)=> a.name.localeCompare(b.name));
+      if(sort === 'age') list.sort((a,b)=> a.age.localeCompare(b.age));
+
+      resultsBody.innerHTML = '';
+      if(list.length === 0){
+        document.getElementById('resultsTable').style.display = 'none';
+        emptyDiv.style.display = 'block';
+        return;
+      }
+      document.getElementById('resultsTable').style.display = '';
+      emptyDiv.style.display = 'none';
+
+      for(const r of list){
+        const tr = document.createElement('tr');
+        const td1 = document.createElement('td'); td1.textContent = r.name; tr.appendChild(td1);
+        const td2 = document.createElement('td'); td2.textContent = r.type; tr.appendChild(td2);
+        const td3 = document.createElement('td'); td3.textContent = r.age; tr.appendChild(td3);
+        resultsBody.appendChild(tr);
+      }
+    }
+
+    applyBtn.addEventListener('click', render);
+    closeBtn.addEventListener('click', () => window.close());
+
+    // initial render
+    render();
+  </script>
+</body>
+</html>

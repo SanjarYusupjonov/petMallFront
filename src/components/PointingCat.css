@@ -1,0 +1,254 @@
+/* Pointing Cat Container */
+.pointing-cat {
+  position: fixed;
+  right: 6rem;
+  top: 45px;
+  transform: translateY(0);
+  width: 100px;
+  height: 130px;
+  z-index: 100;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.pointing-cat.active {
+  opacity: 1;
+  pointer-events: auto;
+  animation: bobbing 2s ease-in-out infinite;
+}
+
+/* Flip only the SVG when pointing login so the hint text stays upright */
+.pointing-cat.pointing-login .cat-svg {
+  transform: scaleX(-1);
+}
+
+.pointing-cat.pointing-signup .cat-svg {
+  transform: scaleX(1);
+}
+
+/* Bobbing animation */
+@keyframes bobbing {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Apply bobbing to the container; SVG flipping is handled on the .cat-svg element */
+.pointing-cat.pointing-login,
+.pointing-cat.pointing-signup {
+  animation: bobbing 2s ease-in-out infinite;
+}
+
+/* SVG Styling */
+.cat-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+  transition: transform 220ms ease;
+  transform-origin: 50% 50%;
+}
+
+/* Paw animations */
+.paw {
+  transform-origin: 50% 70%;
+  transition: transform 0.4s ease;
+}
+
+.paw.pointing {
+  animation: pointingAnimation 1.5s ease-in-out infinite;
+}
+
+@keyframes pointingAnimation {
+  0%, 100% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(-40deg);
+  }
+}
+
+.paw.front-left.pointing {
+  animation: pointingAnimationLeft 1.5s ease-in-out infinite;
+}
+
+.paw.front-right.pointing {
+  animation: pointingAnimationRight 1.5s ease-in-out infinite;
+}
+
+@keyframes pointingAnimationLeft {
+  0%, 100% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(-45deg);
+  }
+}
+
+@keyframes pointingAnimationRight {
+  0%, 100% {
+    transform: rotate(10deg);
+  }
+  50% {
+    transform: rotate(45deg);
+  }
+}
+
+/* Eyes tracking animation */
+.pupil {
+  transition: cx 0.2s ease, cy 0.2s ease;
+}
+
+/* Hint text */
+.hint-text {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  color: var(--accent-pink);
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  animation: fadeInOut 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0;
+  }
+  40%, 60% {
+    opacity: 1;
+  }
+}
+
+/* Hover effect */
+.pointing-cat:hover {
+  transform: translateY(0);
+}
+
+/* Scale the SVG on hover for a pop effect; flipping preserves hint orientation */
+.pointing-cat:hover .cat-svg {
+  transform: scale(1.08);
+}
+
+.pointing-cat.pointing-login:hover .cat-svg {
+  transform: scaleX(-1.08) scaleY(1.08);
+}
+
+/* Mobile responsive - hide on very small screens */
+@media (max-width: 768px) {
+  .navbar {
+    min-height: 75px;
+    padding: 0.9rem 1.5rem;
+  }
+  
+  .nav-left .brand {
+    font-size: 1.1rem;
+  }
+  
+  .btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+  }
+  
+  .pointing-cat {
+    width: 100px;
+    height: 100px;
+    right: 1.5rem;
+    top: 38px;
+  }
+  
+  .hint-text {
+    font-size: 0.65rem;
+    bottom: -25px;
+  }
+}
+
+/* Navbar center menu / dropdown */
+.nav-center {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+}
+
+.menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.menu-item {
+  position: relative;
+  margin-right: 0.5rem;
+}
+
+.menu-trigger {
+  background: transparent;
+  color: var(--accent-pink);
+  border: 1px solid rgba(0,0,0,0.04);
+  padding: 0.7rem 1.2rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.18s ease;
+}
+
+.menu-trigger:hover {
+  background: rgba(255,90,143,0.06);
+}
+
+.dropdown-list {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  padding: 0.4rem 0.2rem;
+  min-width: 120px;
+  /* High but below modal/search so dropdown doesn't cover overlays */
+  z-index: 2000008;
+}
+
+.dropdown-list li {
+  list-style: none;
+}
+
+.dropdown-list a {
+  display: block;
+  padding: 0.45rem 0.8rem;
+  color: #333;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.dropdown-list a:hover {
+  background: #f6f6f6;
+  border-radius: 6px;
+}
+
+/* show dropdown on hover */
+.menu-item.dropdown:hover > .dropdown-list,
+.menu-item.dropdown:focus-within > .dropdown-list {
+  display: block;
+}
+
+/* Choose button next to dropdown items */
+.dropdown-list li {
+  list-style: none;
+}
+
+/* Nav-level Choose button next to Animals trigger */
+.nav-center .choose-nav {
+  margin-left: 0.5rem;
+}

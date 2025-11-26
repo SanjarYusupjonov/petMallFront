@@ -31,11 +31,24 @@
 /* dog transform: translateX and scale controlled by variables set in JS */
 .hero-right { position: relative }
 .hero-scene { display:flex; align-items:flex-end; justify-content:flex-end; position:relative; overflow:visible; border-radius:8px; background: rgba(255,255,255,0.6); padding-bottom: 1.2rem; padding-right: 1.6rem }
+/* nudge whole hero scene a bit lower so framed video and background sit slightly lower on the page */
+.hero-scene { margin-top: 1.5rem }
 .hero-scene img { width:100%; height:100%; object-fit:cover; }
 .frame-video { width:100%; height:100%; object-fit:cover; border-radius:8px; z-index:3; display:block }
 
 /* make sure framed video sits above background hero video */
-.frame-video { position:relative }
+/* Position the framed video so its right edge can extend to the viewport edge on wide screens */
+.frame-video { position: relative }
+
+/* When a modal or overlay is open, hide/pause background videos to avoid visual overlay issues */
+/* Strongly hide and remove videos while modal is open to avoid any stacking/context issues */
+body.modal-open .home-video,
+body.modal-open .frame-video {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
 
 /* full-bleed background video covering the hero area */
 .home-video { position:absolute; left:0; top:0; width:100%; height:100%; object-fit:cover; z-index:1; pointer-events:none }
@@ -105,12 +118,31 @@
   cursor: pointer;
   transition: transform .28s ease, box-shadow .28s ease;
   flex-shrink: 0;
+  position: relative;
+  /* small vertical offset so the framed video sits a bit lower on the scene */
+  --frame-offset: 12px;
+  /* horizontal shift: use negative value to nudge left on wide screens */
+  --frame-shift: 0;
+  transform: translateX(var(--frame-shift)) translateY(var(--frame-offset));
 }
-.frame-video:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 18px 48px rgba(0,0,0,0.2); }
+.frame-video:hover { transform: translateX(var(--frame-shift)) translateY(calc(var(--frame-offset) - 6px)) scale(1.02); box-shadow: 0 18px 48px rgba(0,0,0,0.2); }
 
-@media (max-width:1100px) { .hero-inner { max-width: 980px } .frame-video { width: clamp(220px, 40vw, 440px) } }
+/* On wide screens move the whole hero-scene (frame + video) toward the right edge so the frame
+   touches the viewport. This keeps the frame and video aligned. */
+@media (min-width: 1101px) {
+  .hero-scene {
+    /* move right to align with viewport edge and down by 1.5rem */
+    transform: translateX(calc((100vw - 1100px) / 2)) translateY(1.5rem);
+  }
+
+  /* nudge the framed video slightly left on very wide screens */
+  .frame-video { --frame-shift: -20px; }
+}
+
+@media (max-width:1100px) { .hero-inner { max-width: 980px } .frame-video { position: relative; width: clamp(220px, 40vw, 440px); --frame-offset: 8px; --frame-shift: 0; } .hero-scene { margin-top: 1rem } }
+
 @media (max-width:900px) {
   .home-video { display:block; height: 46vh }
   .hero-scene { height: 260px }
-  .frame-video { width: 92%; height:100%; max-height:320px }
+  .frame-video { width: 92%; height:100%; max-height:320px; position: relative; right: auto; bottom: auto; --frame-offset: 0; --frame-shift: 0 }
 }
