@@ -209,7 +209,8 @@
 .dropdown-list {
   display: none;
   position: absolute;
-  top: calc(100% + 8px);
+  /* place the dropdown directly touching the trigger to avoid a mouse gap */
+  top: 100%;
   left: 0;
   background: white;
   border-radius: 8px;

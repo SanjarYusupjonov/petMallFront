@@ -1,0 +1,52 @@
+.christmas-lights {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 6px;
+  height: 48px;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000012;
+}
+
+.lights-string {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px;
+}
+
+.light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 8px rgba(0,0,0,0.15);
+  transform-origin: center;
+  animation: twinkle 1.6s ease-in-out infinite;
+  opacity: 0.95;
+}
+
+.light.red { background: #ff4d4d; box-shadow: 0 0 10px rgba(255,77,77,0.9); }
+.light.green { background: #4cd964; box-shadow: 0 0 10px rgba(76,217,100,0.9); }
+.light.yellow { background: #ffd54f; box-shadow: 0 0 10px rgba(255,213,79,0.9); }
+.light.blue { background: #5aa9ff; box-shadow: 0 0 10px rgba(90,169,255,0.9); }
+.light.purple { background: #c57bff; box-shadow: 0 0 10px rgba(197,123,255,0.9); }
+.light.orange { background: #ff9a4d; box-shadow: 0 0 10px rgba(255,154,77,0.9); }
+.light.teal { background: #4dd0e1; box-shadow: 0 0 10px rgba(77,208,225,0.9); }
+
+@keyframes twinkle {
+  0%, 100% { transform: scale(1); opacity: 0.85; filter: brightness(0.9); }
+  40% { transform: scale(1.25); opacity: 1; filter: brightness(1.45); }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .light {
+    animation: none !important;
+  }
+}

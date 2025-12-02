@@ -3,7 +3,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 1.2rem 2.5rem;
-  background: #ffffffcc;
+  /* Soft translucent purple matching requested RGB(131,93,199) */
+  background-color: rgba(131, 93, 199, 0.14);
   backdrop-filter: blur(6px);
   border-bottom: 1px solid #eee;
   min-height: 90px;
@@ -14,9 +15,16 @@
 }
 
 .nav-left .brand {
-  font-weight: 700;
-  font-size: 1.4rem;
-  color: var(--accent-pink);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.nav-brand-logo {
+  height: 80px;
+  width: auto;
+  display: block;
+  transition: height 200ms ease;
 }
 
 .nav-right {
@@ -29,11 +37,17 @@
 .navbar.shrink {
   padding: 0.5rem 1.2rem;
   min-height: 58px;
-  background: #ffffffdd;
+  /* Slightly stronger translucent purple when shrunk */
+  background-color: rgba(131, 93, 199, 0.18);
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
-.navbar.shrink .nav-left .brand { font-size: 1.05rem; }
+.navbar.shrink .nav-brand-logo { height: 56px; }
+
+/* Navbar transitions */
+.navbar {
+  transition: padding 220ms ease, min-height 220ms ease, box-shadow 220ms ease, background-color 220ms ease;
+}
 .navbar.shrink .btn { padding: 0.45rem 0.8rem; font-size: 0.88rem; }
 .navbar.shrink .nav-center .menu { gap: 0.4rem; }
 

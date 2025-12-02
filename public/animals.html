@@ -5,9 +5,32 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Animal Chooser</title>
   <style>
-    body{font-family:system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial;margin:0;padding:1.2rem;background:#fafafa;color:#222}
-    .container{max-width:980px;margin:0 auto}
-    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+    :root{--accent-pink:#ff5a8f; --bg-beige:#fbf7f5}
+    body{font-family:system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial;margin:0;background:var(--bg-beige);color:#222}
+
+    /* Top navbar similar to app */
+    .navbar{display:flex;align-items:center;justify-content:space-between;padding:0.9rem 1.2rem;background-color:rgba(131,93,199,0.14);backdrop-filter:blur(6px);border-bottom:1px solid rgba(0,0,0,0.04)}
+    .nav-left .brand{display:inline-flex;align-items:center;gap:0.6rem}
+    .nav-brand-logo{height:56px;width:auto;display:block}
+    .nav-center{display:flex;align-items:center;gap:0.6rem}
+    .btn{padding:0.55rem 0.85rem;border-radius:6px;border:1px solid transparent;cursor:pointer;font-weight:600;background:transparent}
+    .btn.primary{background:var(--accent-pink);color:#fff;border-color:var(--accent-pink)}
+    .btn.ghost{background:transparent;color:var(--accent-pink);border:1px solid rgba(0,0,0,0.04)}
+
+    /* Christmas lights across top */
+    .christmas-lights{position:fixed;left:0;right:0;top:6px;height:48px;pointer-events:none;display:flex;justify-content:center;align-items:center;z-index:200}
+    .lights-string{width:100%;max-width:1100px;display:flex;justify-content:space-between;padding:0 12px}
+    .light{width:12px;height:12px;border-radius:50%;display:inline-block;box-shadow:0 0 8px rgba(0,0,0,0.12);transform-origin:center;opacity:0.95;animation:twinkle 1.6s ease-in-out infinite}
+    .light.red{background:#ff4d4d;box-shadow:0 0 10px rgba(255,77,77,0.9)}
+    .light.green{background:#4cd964;box-shadow:0 0 10px rgba(76,217,100,0.9)}
+    .light.yellow{background:#ffd54f;box-shadow:0 0 10px rgba(255,213,79,0.9)}
+    .light.blue{background:#5aa9ff;box-shadow:0 0 10px rgba(90,169,255,0.9)}
+    .light.purple{background:#c57bff;box-shadow:0 0 10px rgba(197,123,255,0.9)}
+    .light.orange{background:#ff9a4d;box-shadow:0 0 10px rgba(255,154,77,0.9)}
+    .light.teal{background:#4dd0e1;box-shadow:0 0 10px rgba(77,208,225,0.9)}
+    @keyframes twinkle{0%,100%{transform:scale(1);opacity:0.85}40%{transform:scale(1.25);opacity:1}}
+
+    .container{max-width:980px;margin:6.2rem auto 2rem;padding:0 1rem}
     h1{font-size:1.4rem;margin:0}
     .controls{display:flex;gap:0.5rem;align-items:center}
     select, button{padding:0.5rem 0.7rem;border-radius:8px;border:1px solid #ddd}
@@ -15,35 +38,49 @@
     th,td{padding:0.75rem 0.9rem;border-bottom:1px solid #f0f0f0;text-align:left}
     thead th{background:#f7f7f7}
     .empty{padding:3rem;text-align:center;color:#666}
+
+    /* small responsive adjustments */
+    @media (max-width:640px){.nav-brand-logo{height:44px}.container{margin-top:5.2rem}}
   </style>
 </head>
 <body>
+  <!-- Christmas lights (decorative) -->
+  <div class="christmas-lights" aria-hidden="true">
+    <div class="lights-string">
+      <span class="light red" style="animation-delay:0s"></span>
+      <span class="light green" style="animation-delay:0.12s"></span>
+      <span class="light yellow" style="animation-delay:0.24s"></span>
+      <span class="light blue" style="animation-delay:0.36s"></span>
+      <span class="light purple" style="animation-delay:0.48s"></span>
+      <span class="light orange" style="animation-delay:0.6s"></span>
+      <span class="light teal" style="animation-delay:0.72s"></span>
+      <span class="light red" style="animation-delay:0.84s"></span>
+      <span class="light green" style="animation-delay:0.96s"></span>
+      <span class="light yellow" style="animation-delay:1.08s"></span>
+      <span class="light blue" style="animation-delay:1.2s"></span>
+      <span class="light purple" style="animation-delay:1.32s"></span>
+      <span class="light orange" style="animation-delay:1.44s"></span>
+      <span class="light teal" style="animation-delay:1.56s"></span>
+    </div>
+  </div>
+
+  <div class="navbar">
+    <div class="nav-left">
+      <a class="brand" href="/">
+        <img src="/logo.jpg" alt="PetMall" class="nav-brand-logo" />
+      </a>
+    </div>
+    <div class="nav-center">
+      <button class="btn ghost menu-trigger">Animals ▾</button>
+      <button class="btn ghost choose-nav">Choose</button>
+    </div>
+    <div class="nav-right">
+      <button class="btn ghost">Login</button>
+      <button class="btn primary">Sign Up</button>
+    </div>
+  </div>
+
   <div class="container">
-    <header>
-      <h1>Animal Chooser</h1>
-      <div class="controls">
-        <label>
-          Filter:
-          <select id="filterSelect">
-            <option value="">All</option>
-            <option value="Dog">Dog</option>
-            <option value="Cat">Cat</option>
-            <option value="Horse">Horse</option>
-            <option value="Lion">Lion</option>
-            <option value="Fish">Fish</option>
-          </select>
-        </label>
-        <label>
-          Sort:
-          <select id="sortSelect">
-            <option value="name">Name</option>
-            <option value="age">Age</option>
-          </select>
-        </label>
-        <button id="applyBtn">Apply</button>
-        <button id="closeBtn">Close</button>
-      </div>
-    </header>
 
     <main>
       <table id="resultsTable">

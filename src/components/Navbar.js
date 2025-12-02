@@ -4,6 +4,7 @@ import '../App.css';
 import './Navbar.css';
 import PetList from '../pages/PetList';
 import PointingCat from './PointingCat';
+import ChristmasLights from './ChristmasLights';
 
 export default function Navbar() {
   const [showLogin, setShowLogin] = useState(false);
@@ -12,6 +13,7 @@ export default function Navbar() {
   const loginBtnRef = useRef(null);
   const signupBtnRef = useRef(null);
   const navRef = useRef(null);
+  const loginRef = loginBtnRef;
 
   React.useEffect(() => {
     const handler = () => setShowSearch(false);
@@ -77,8 +79,11 @@ export default function Navbar() {
 
   return (
     <header className="navbar" ref={navRef}>
+      <ChristmasLights />
       <div className="nav-left">
-        <div className="brand">PetMall</div>
+        <a className="brand" href="/">
+          <img src={process.env.PUBLIC_URL + '/logo.jpg'} alt="PetMall" className="nav-brand-logo" />
+        </a>
       </div>
 
       <nav className="nav-center">
