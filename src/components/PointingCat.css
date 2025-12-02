@@ -238,9 +238,10 @@
   border-radius: 6px;
 }
 
-/* show dropdown on hover */
-.menu-item.dropdown:hover > .dropdown-list,
-.menu-item.dropdown:focus-within > .dropdown-list {
+/* show dropdown only on hover of the Animals button or the dropdown list */
+.menu-trigger:hover ~ .dropdown-list,
+.menu-trigger:focus ~ .dropdown-list,
+.dropdown-list:hover {
   display: block;
 }
 
