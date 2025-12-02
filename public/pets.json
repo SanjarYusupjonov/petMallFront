@@ -1,0 +1,10 @@
+[
+  {"id":"p1","name":"Buddy","type":"Dog","age":"2 yrs","photoUrl":"https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=1","description":"Playful and loyal. Loves walks and fetch."},
+  {"id":"p2","name":"Lola","type":"Dog","age":"3 yrs","photoUrl":"https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=1","description":"Calm companion that enjoys naps and cuddles."},
+  {"id":"p3","name":"Milo","type":"Cat","age":"1 yr","photoUrl":"https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=1","description":"Curious cat who loves climbing and sunny windows."},
+  {"id":"p4","name":"Nala","type":"Cat","age":"3 yrs","photoUrl":"https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=1","description":"Affectionate and gentle — great for families."},
+  {"id":"p5","name":"Charlie","type":"Dog","age":"6 mo","photoUrl":"https://images.unsplash.com/photo-1501706362039-c6e8098a2b42?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=1","description":"Energetic pup that needs playtime and training."},
+  {"id":"p6","name":"Daisy","type":"Dog","age":"5 yrs","photoUrl":"https://images.unsplash.com/photo-1517976487492-6b6ad6a6d5d6?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=1","description":"Friendly and good with kids."},
+  {"id":"p7","name":"Peanut","type":"Dog","age":"6 months","photoUrl":"https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=1","description":"Small and energetic puppy."},
+  {"id":"p8","name":"Misty","type":"Horse","age":"5 yrs","photoUrl":"https://images.unsplash.com/photo-1504208434309-cb69f4fe52b0?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=1","description":"Calm and gentle, perfect for trails."}
+]

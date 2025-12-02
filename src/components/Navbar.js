@@ -5,11 +5,13 @@ import './Navbar.css';
 import PetList from '../pages/PetList';
 import PointingCat from './PointingCat';
 import ChristmasLights from './ChristmasLights';
+import PetQuiz from './PetQuiz';
 
 export default function Navbar() {
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+  const [showQuiz, setShowQuiz] = useState(false);
   const loginBtnRef = useRef(null);
   const signupBtnRef = useRef(null);
   const navRef = useRef(null);
@@ -38,7 +40,7 @@ export default function Navbar() {
 
   // When any modal/search is open, pause and hide background videos to prevent overlay issues.
   React.useEffect(() => {
-    const modalOpen = showLogin || showSignup || showSearch;
+    const modalOpen = showLogin || showSignup || showSearch || showQuiz;
     document.body.classList.toggle('modal-open', modalOpen);
 
     const vids = Array.from(document.querySelectorAll('video'));
@@ -69,7 +71,7 @@ export default function Navbar() {
         v.removeAttribute('data-paused-by-modal');
       });
     };
-  }, [showLogin, showSignup, showSearch]);
+  }, [showLogin, showSignup, showSearch, showQuiz]);
 
   const openChooser = (filter) => {
     // Open a new dedicated window for sorting/choosing animals
@@ -98,6 +100,7 @@ export default function Navbar() {
               <li><a href="#fish">Fish</a></li>
             </ul>
             <button className="btn ghost choose-nav" onClick={() => openChooser('')}>Choose</button>
+            <button className="btn ghost" onClick={() => setShowQuiz(true)}>Quiz</button>
           </li>
         </ul>
       </nav>
@@ -175,6 +178,10 @@ export default function Navbar() {
             </form>
           </div>
         </div>
+      , document.body)}
+
+      {showQuiz && typeof document !== 'undefined' && ReactDOM.createPortal(
+        <PetQuiz onClose={() => setShowQuiz(false)} />
       , document.body)}
     </header>
   );
