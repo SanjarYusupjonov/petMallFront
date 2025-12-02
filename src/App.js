@@ -1,12 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-import { rainbowCursor } from './cursor'; // Import your cursor function
+import { rainbowCursor } from './cursor';
 import Navbar from './components/Navbar';
 import './App.css';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 
 function App() {
-  // Rainbow cursor
   useEffect(() => {
     const cursor = rainbowCursor({});
 
@@ -18,11 +17,9 @@ function App() {
   useEffect(() => {
   const audioURL = process.env.PUBLIC_URL + "/meow.mp3";
 
-  // Preload the audio fully so it’s ready instantly
   const meow = new Audio(audioURL);
   meow.preload = "auto";
 
-  // For instant response, create a new Audio() each click
   const playSound = () => {
     const s = new Audio(audioURL);
     s.play().catch(() => {});
@@ -33,8 +30,6 @@ function App() {
   return () => window.removeEventListener("click", playSound);
 }, []);
 
-  // Background music (attempt autoplay). If browser blocks autoplay,
-  // the audio will still start on the user's first interaction (no visible button).
   const musicRef = useRef(null);
 
   useEffect(() => {
@@ -49,7 +44,6 @@ function App() {
       try {
         await music.play();
       } catch (err) {
-        // Autoplay blocked — play on first user interaction (no UI shown)
         const onFirstGesture = async () => {
           try { await music.play(); } catch (e) {}
           window.removeEventListener('click', onFirstGesture);

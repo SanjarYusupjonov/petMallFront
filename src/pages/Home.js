@@ -3,16 +3,9 @@ import PetCard from '../components/Petcards';
 import '../components/Petcards.css';
 import './Home.css';
 
-// Removed recommended placeholders per user request — keep array empty so no hero cards render
 const RECOMMENDED = [];
 
-// const AVAILABLE = [];
-
 export default function Home() {
-  // Static hero — replaced animated SVG with a clear photo of a cute dog.
-
-  // Framed inline video removed per request (cute.mp4)
-
   return (
     <>
       <div className="home-hero">
@@ -30,8 +23,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-
-          {/* right column intentionally left empty after removing framed video */}
         </div>
 
         <video className="home-video" autoPlay muted loop playsInline poster="/hero-poster.jpg">
@@ -64,18 +55,36 @@ export default function Home() {
 
       <section className="about-contact">
         <div className="container">
-          <h2>About & Contact</h2>
-          <p>PetMall is a community-driven platform working with local shelters to help pets find homes. Reach out to volunteer or help.</p>
+          <h2>About Us</h2>
+          <p>Welcome to PetCare, a platform created with love and dedication by five passionate students — <strong>Doniyor, Sanjar, Alisher, Shohruh, and Asadbek</strong>.</p>
+          
+          <h3>Our Mission</h3>
+          <p>Our mission is simple: to connect homeless pets with caring people, and to make shelter management easier, faster, and more organized.</p>
+          
+          <h3>We Believe Every Animal Deserves:</h3>
+          <ul>
+            <li>A safe home</li>
+            <li>A loving family</li>
+            <li>Proper care and attention</li>
+          </ul>
+
+          <h2>Contact Us</h2>
+          <p>Have questions, suggestions, or want to get involved? We'd love to hear from you!</p>
+          
           <div className="contact-row">
             <div>
-              <strong>Email</strong>
-              <div>hello@petmall.example</div>
+              <strong>📧 Email</strong>
+              <div>petcare@newuu.uz</div>
             </div>
             <div>
-              <strong>Address</strong>
-              <div>123 Pet Lane, Animal City</div>
+              <strong>📱 Phone</strong>
+              <div>+998 77 777 77 77</div>
             </div>
           </div>
+
+          <p style={{ marginTop: '1.5rem', color: '#666' }}>
+            Whether you're a shelter, a future pet owner, or someone who simply loves animals, feel free to reach out anytime. We're here to help!
+          </p>
         </div>
       </section>
     </>

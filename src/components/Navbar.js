@@ -23,7 +23,6 @@ export default function Navbar() {
     return () => window.removeEventListener('closeSearch', handler);
   }, []);
 
-  // shrink navbar slightly when user scrolls down
   React.useEffect(() => {
     const el = navRef.current;
     if (!el) return undefined;
@@ -33,12 +32,10 @@ export default function Navbar() {
       else el.classList.remove('shrink');
     };
     window.addEventListener('scroll', onScroll, { passive: true });
-    // run once to set initial state
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // When any modal/search is open, pause and hide background videos to prevent overlay issues.
   React.useEffect(() => {
     const modalOpen = showLogin || showSignup || showSearch || showQuiz;
     document.body.classList.toggle('modal-open', modalOpen);
@@ -46,7 +43,6 @@ export default function Navbar() {
     const vids = Array.from(document.querySelectorAll('video'));
     if (modalOpen) {
       vids.forEach((v) => {
-        // remember playing state
         if (!v.paused) {
           v.pause();
           v.setAttribute('data-paused-by-modal', 'true');
@@ -64,7 +60,6 @@ export default function Navbar() {
     }
 
     return () => {
-      // cleanup: ensure class removed and videos restored
       document.body.classList.remove('modal-open');
       vids.forEach((v) => {
         v.style.pointerEvents = '';
@@ -74,7 +69,6 @@ export default function Navbar() {
   }, [showLogin, showSignup, showSearch, showQuiz]);
 
   const openChooser = (filter) => {
-    // Open a new dedicated window for sorting/choosing animals
     const url = `/animals.html?filter=${encodeURIComponent(filter || '')}`;
     window.open(url, '_blank', 'noopener,noreferrer');
   };

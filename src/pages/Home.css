@@ -79,7 +79,7 @@ body.modal-open .frame-video {
 .how-step .num { width:36px;height:36px;border-radius:50%;background:var(--accent-pink);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;margin-bottom:0.6rem }
 
 .about-contact { background: #fff; padding: 1.6rem 0 }
-.contact-row { display:flex; gap:2rem; margin-top:1rem }
+.contact-row { display:flex; gap:2rem; margin-top:1rem; justify-content:center; text-align:center }
 
 @media (max-width:900px){
   .how-grid{flex-direction:column}

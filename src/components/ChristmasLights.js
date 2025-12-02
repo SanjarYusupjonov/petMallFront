@@ -9,7 +9,6 @@ export default function ChristmasLights() {
       <div className="lights-string">
         {Array.from({ length: 14 }).map((_, i) => {
           const color = bulbs[i % bulbs.length];
-          // Stagger animation using inline style delay
           const style = { animationDelay: `${(i % 6) * 0.12}s` };
           return <span key={i} className={`light ${color}`} style={style} />;
         })}
